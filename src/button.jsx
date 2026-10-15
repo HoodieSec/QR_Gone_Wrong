@@ -1,11 +1,14 @@
 import './button.css'
-function Button_Link(){
 
-    const handleButtonClick  = () => {
-        window.open('https://google.com')
+function Button_Link(){
+    const handleButtonClick = () => {
+        window.open('https://google.com', '_blank', 'noopener,noreferrer');
     }
-    return(
-        <a id="link" href="" target="_blank" onClick={handleButtonClick} rel="noopener noreferrer"> <button class="Button">  PLEASE FILL THIS SURVEY  </button> </a>
+
+    return (
+        <button className="Button" onClick={handleButtonClick}>
+            PLEASE FILL THIS SURVEY
+        </button>
     );
 }
 
