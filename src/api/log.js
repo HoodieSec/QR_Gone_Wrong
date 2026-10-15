@@ -1,25 +1,24 @@
-import express from 'express';
-import cors from 'cors';
 import crypto from 'crypto';
 import dns from 'dns/promises';
 import { createClient } from '@supabase/supabase-js';
-
-const app = express();
-app.use(cors());
-app.use(express.json());
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-app.post('/api/log', async (req, res) => {
+export default async function handler(req, res) {
+  // Only accept POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
   try {
     // 1. IP Address
     const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
     const ip = rawIp.split(',')[0].trim();
 
-    // 2. Edge Geolocation (Extracted automatically from Vercel edge headers)
+    // 2. Edge Geolocation (Provided automatically by Vercel)
     const geo = {
       country: req.headers['x-vercel-ip-country'] || 'Unknown',
       region: req.headers['x-vercel-ip-country-region'] || 'Unknown',
@@ -44,7 +43,7 @@ app.post('/api/log', async (req, res) => {
       clientHostname = 'No PTR record / Timeout';
     }
 
-    // 4. Device Fingerprinting (SHA-256 Hash of IP + User-Agent + Accept-Language)
+    // 4. Device Fingerprinting
     const userAgent = req.headers['user-agent'] || 'Unknown';
     const acceptLanguage = req.headers['accept-language'] || 'Unknown';
     
@@ -88,6 +87,4 @@ app.post('/api/log', async (req, res) => {
     console.error('Server error:', err);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
-});
-
-export default app;
+}
