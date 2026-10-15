@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Analytics } from "@vercel/analytics/next"
 import Main_display from './display'
 import './display.css'
 
