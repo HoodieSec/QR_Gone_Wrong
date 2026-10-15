@@ -1,0 +1,44 @@
+body{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(0, 224, 240, 1) 50%, rgba(0, 64, 110, 1) 100%);
+    color:white;
+}
+
+.main {
+  /* Page centering */
+  margin: auto; 
+  
+  /* Sizing and borders */
+  width: 900px;
+  min-height: 800px; /* Allows the box to grow taller if the content needs more space */
+  padding: 40px; /* Keeps content away from the border edges */
+  box-sizing: border-box; /* Ensures padding doesn't widen the 700px box */
+  border: 3px solid black;
+  border-radius: 30px;
+
+  /* Inner layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adds clean, even spacing between the heading, text, and image */
+  text-align: center;
+}
+
+/* Ensure any image placed inside the main box stays within the borders */
+.main img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Optional: rounds the image corners to match the container */
+}
+
+/* Strip default margins from the main heading so it stops pushing itself upward */
+.main h1:first-child {
+  margin-top: 0; 
+}
+
+.main h1{
+    font-size: 300px;
+    font-weight:bold;
+    margin:0;
+}
