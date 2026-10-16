@@ -11,9 +11,13 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Extract IP address from Vercel edge headers
+    const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
+    const ip = rawIp.split(',')[0].trim();
+
     const { data, error } = await supabase
       .from('visitor_logs')
-      .insert([{}])
+      .insert([{ ip_address: ip }])
       .select();
 
     if (error) {
